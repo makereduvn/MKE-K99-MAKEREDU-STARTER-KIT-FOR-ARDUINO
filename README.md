@@ -110,7 +110,7 @@ Trong một hệ thống điều khiển cơ bản có ba thành phần chính:
 - **Control (Điều khiển):** xử lý tín hiệu và đưa ra quyết định.
 - **Output (Đầu ra):** thực hiện hành động như bật LED, phát âm thanh...
 
-Trong bài học này, **VIETDUINO UNO** đóng vai trò là bộ điều khiển và **MKE-M01 1-LED 10MM RGYBW MODULE** là thiết bị đầu ra.
+Trong bài học này, **VIETDUINO UNO** đóng vai trò là bộ **điều khiển (Control)** và **MKE-M01 1-LED 10MM RGYBW MODULE** là thiết bị **đầu ra (Output)**.
 
 ### Tín hiệu Digital là gì?
 
@@ -173,7 +173,7 @@ Chờ 1 giây
 Lặp lại
 ```
 
-**Kết quả thực tế:** LED sẽ **sáng trong 1 giây, tắt trong 1 giây và lặp lại liên tục**.
+**Kết quả thực tế:** LED sẽ sáng trong 1 giây, tắt trong 1 giây và lặp lại liên tục.
 
 ### Phân tích chương trình
 
@@ -306,54 +306,232 @@ có nghĩa là Arduino sẽ chờ **1 giây (1000ms)** trước khi thực hiệ
 
 Trong chương trình, lệnh này được sử dụng sau khi bật / tắt LED để LED duy trì trạng thái trong 1 giây.
 
-## Bài 2 – Điều khiển Led bằng nút nhấn
+## Bài 2 – Sử dụng nút nhấn Button để điều khiển LED
 
-## Mục tiêu
+Ở bài học trước, chúng ta đã sử dụng tín hiệu Digital để điều khiển LED. Trong bài học này, chúng ta sẽ tìm hiểu cách **đọc tín hiệu đầu vào (Input) từ nút nhấn Button** và sử dụng tín hiệu đó để điều khiển LED.
 
-Học:
+Nút nhấn Button sử dụng **tín hiệu Digital**, chỉ có hai trạng thái `HIGH` và `LOW`. Dựa vào trạng thái của nút nhấn Button, VIETDUINO UNO có thể quyết định bật hoặc tắt LED.
 
-- Digital Input.
-- `digitalRead()`.
-- `if...else`.
+### Kết nối
 
-## Kết nối
+Kết nối **MKE-M01 1-LED 10MM RGYBW MODULE** như sau:
 
-```text
-Button → D6
-LED    → D4
-```
+| VIETDUINO UNO + IO SHIELD | MKE-M01 | Chức năng |
+|:---:|:---:|:---|
+| `EX-5V` | `+` | Nguồn dương 5VDC |
+| `GND` | `-` | Nguồn âm 0VDC |
+| `AR-4` | `S` | Tín hiệu Digital |
 
-## Code
+Kết nối **MKE-M02 BUTTON RGYBW MODULE** như sau:
+
+| VIETDUINO UNO + IO SHIELD | MKE-M02 | Chức năng |
+|:---:|:---:|:---|
+| `EX-5V` | `+` | Nguồn dương 5VDC |
+| `GND` | `-` | Nguồn âm 0VDC |
+| `AR-6` | `S` | Tín hiệu Digital |
+
+Phân tích kết nối:
+
+- **Input:** MKE-M02 Button Module.
+- **Control:** VIETDUINO UNO.
+- **Output:** MKE-M01 LED Module.
+- Nút nhấn Button và LED đều sử dụng **tín hiệu Digital**.
+
+> **Lưu ý:** LED sử dụng **D4** và nút nhấn Button sử dụng **D6**.
+
+### Chương trình
+
+Nạp chương trình sau vào **VIETDUINO UNO**:
 
 ```cpp
-const int BUTTON_PIN = 6;
-const int LED_PIN = 4;
+// Lesson 2: Button to turn ON/OFF LED
+
+const int buttonPin = 6;
+const int ledPin = 4;
+
+int buttonState = 0;
 
 void setup() {
-  pinMode(BUTTON_PIN, INPUT);
-  pinMode(LED_PIN, OUTPUT);
+  pinMode(ledPin, OUTPUT);
+  pinMode(buttonPin, INPUT);
 }
 
 void loop() {
-  int buttonState = digitalRead(BUTTON_PIN);
+  buttonState = digitalRead(buttonPin);
 
   if (buttonState == HIGH) {
-    digitalWrite(LED_PIN, HIGH);
+    digitalWrite(ledPin, HIGH);
   } else {
-    digitalWrite(LED_PIN, LOW);
+    digitalWrite(ledPin, LOW);
   }
 }
 ```
 
 ## Kết quả
 
-Nhấn Button → LED sáng.
+Sau khi chương trình được nạp thành công:
 
-Thả Button → LED tắt.
+```text
+Nhấn Button
+    ↓
+Button = HIGH
+    ↓
+VIETDUINO UNO nhận tín hiệu
+    ↓
+D4 = HIGH
+    ↓
+LED bật
+```
 
-Cấu hình D6 cho Button và D4 cho LED được giữ theo tài liệu tham khảo. fileciteturn1file2L226-L234
+Khi thả Button:
+
+```text
+Thả Button
+    ↓
+Button = LOW
+    ↓
+VIETDUINO UNO nhận tín hiệu
+    ↓
+D4 = LOW
+    ↓
+LED tắt
+```
+
+**Kết quả thực tế:** Khi **nhấn Button**, LED sẽ **sáng**. Khi **thả Button**, LED sẽ **tắt**.
 
 ---
+
+## Phân tích chương trình
+
+### 1. Khai báo chân Button và LED
+
+```cpp
+const int buttonPin = 6;
+const int ledPin = 4;
+```
+
+- `buttonPin = 6`: Button được kết nối với **D6**.
+- `ledPin = 4`: LED được kết nối với **D4**.
+
+### 2. Khai báo biến `buttonState`
+
+```cpp
+int buttonState = 0;
+```
+
+Biến `buttonState` lưu trạng thái hiện tại của Button.
+
+```text
+HIGH → 1
+LOW  → 0
+```
+
+### 3. Thiết lập LED là ngõ ra
+
+```cpp
+pinMode(ledPin, OUTPUT);
+```
+
+Thiết lập chân D4 ở chế độ `OUTPUT` để VIETDUINO UNO có thể điều khiển LED.
+
+### 4. Thiết lập Button là ngõ vào
+
+```cpp
+pinMode(buttonPin, INPUT);
+```
+
+Thiết lập chân D6 ở chế độ `INPUT` để VIETDUINO UNO có thể đọc tín hiệu từ Button.
+
+### 5. Đọc trạng thái Button
+
+```cpp
+buttonState = digitalRead(buttonPin);
+```
+
+Hàm `digitalRead()` dùng để đọc trạng thái Digital của một chân.
+
+**Cú pháp:**
+
+```cpp
+digitalRead(pin);
+```
+
+Trong bài học này, Arduino đọc chân D6 và lưu kết quả vào `buttonState`.
+
+### 6. Kiểm tra trạng thái bằng `if...else`
+
+```cpp
+if (buttonState == HIGH) {
+  digitalWrite(ledPin, HIGH);
+} else {
+  digitalWrite(ledPin, LOW);
+}
+```
+
+Nếu Button ở trạng thái `HIGH`, LED được bật. Nếu không, LED được tắt.
+
+```text
+Button = HIGH → LED = HIGH → LED bật
+Button = LOW  → LED = LOW  → LED tắt
+```
+
+### 7. Bật LED
+
+```cpp
+digitalWrite(ledPin, HIGH);
+```
+
+Khi Button được nhấn và `buttonState == HIGH`, Arduino xuất mức `HIGH` đến D4, làm LED bật.
+
+### 8. Tắt LED
+
+```cpp
+digitalWrite(ledPin, LOW);
+```
+
+Khi điều kiện không đúng, Arduino xuất mức `LOW` đến D4, làm LED tắt.
+
+---
+
+## Tổng kết hoạt động
+
+```text
+             ┌──────────────────┐
+             │   Đọc Button D6  │
+             └────────┬─────────┘
+                      ↓
+                Button = HIGH?
+                 /          \
+               Có            Không
+               ↓               ↓
+          LED D4 = HIGH    LED D4 = LOW
+               ↓               ↓
+            LED sáng        LED tắt
+                 \          /
+                  └────┬─────┘
+                       ↓
+                   Lặp lại
+```
+
+## Kiến thức đạt được
+
+Sau khi hoàn thành bài học này, bạn đã làm quen với:
+
+- **Digital Input**.
+- Đọc trạng thái Digital bằng `digitalRead()`.
+- Sử dụng Button làm thiết bị đầu vào.
+- Sử dụng `if...else` để xử lý điều kiện.
+- Điều khiển LED dựa trên trạng thái của Button.
+- Kết hợp **Input → Control → Output** trong một chương trình Arduino.
+
+## Thử thách
+
+Sau khi hoàn thành bài học, hãy thử:
+
+1. Nhấn Button → LED tắt, thả Button → LED sáng.
+2. Nhấn Button → LED bật/tắt theo từng lần nhấn.
+3. Kết hợp Button và Buzzer để tạo cảnh báo.
+
 
 # Lesson 3 – Potentiometer điều khiển tốc độ LED
 
