@@ -102,42 +102,42 @@ MKE-B03 Vietduino IO Shield giúp người dùng dễ dàng đấu nối mà kh�
 
 ### Bài 1 – Điều khiển LED bằng tín hiệu Digital
 
-Chúng ta sẽ bắt đầu làm quen với việc điều khiển phần cứng bằng Arduino thông qua bài học đầu tiên: **điều khiển LED**.
+Chúng ta sẽ bắt đầu làm quen với việc điều khiển phần cứng Arduino thông qua bài học đầu tiên: **điều khiển LED**.
 
-Trong một hệ thống điều khiển cơ bản có thể chia thành ba thành phần:
+Trong một hệ thống điều khiển cơ bản có ba thành phần chính:
 
 - **Input (Đầu vào):** nhận tín hiệu từ nút nhấn, cảm biến...
 - **Control (Điều khiển):** xử lý tín hiệu và đưa ra quyết định.
 - **Output (Đầu ra):** thực hiện hành động như bật LED, phát âm thanh...
 
-Trong bài học này, chúng ta chỉ sử dụng **Output**. **VIETDUINO UNO** đóng vai trò là bộ điều khiển, **MKE-M01 LED Module** là thiết bị đầu ra và tín hiệu điều khiển là **tín hiệu Digital**.
+Trong bài học này, **VIETDUINO UNO** đóng vai trò là bộ điều khiển và **MKE-M01 1-LED 10MM RGYBW MODULE** là thiết bị đầu ra.
 
 #### Tín hiệu Digital là gì?
 
-**Digital Signal (tín hiệu số)** là tín hiệu chỉ có một số trạng thái xác định. Với Arduino UNO, tín hiệu Digital cơ bản có hai trạng thái:
+**Digital Signal (tín hiệu số)** là tín hiệu có các trạng thái xác định. Với Arduino UNO, tín hiệu Digital cơ bản gồm hai trạng thái:
 
 | Trạng thái | Giá trị | Mức điện áp |
-|---|:---:|:---:|
-| `LOW` | `0` | 0VDC |
-| `HIGH` | `1` | 5VDC |
+|:---:|:---:|:---:|
+| `LOW` | `0` | 0V |
+| `HIGH` | `1` | 5V |
 
 Khi Arduino xuất tín hiệu `HIGH` đến chân điều khiển LED, LED sẽ bật. Khi xuất tín hiệu `LOW`, LED sẽ tắt.
 
----
-
 #### Kết nối
 
-| VIETDUINO UNO + IO SHIELD | MKE-M01 1-LED 10MM MODULE  | Chức năng |
-|:---:|:---:|---|
+Kết nối **MKE-M01 1-LED 10MM RGYBW MODULE** với **MKE-B03 VIETDUINO IO SHIELD** như sau:
+
+| VIETDUINO UNO + IO SHIELD | MKE-M01 | Chức năng |
+|:---:|:---:|:---|
 | `EX-5V` | `+` | Nguồn dương 5VDC |
 | `GND` | `-` | Nguồn âm 0VDC |
 | `AR-4` | `S` | Tín hiệu Digital |
 
-> **Lưu ý:** Trong bài học này, chân tín hiệu của LED được kết nối với **Digital Pin D4** của VIETDUINO UNO.
-
----
+> **Lưu ý:** Chân tín hiệu `S` của MKE-M01 được kết nối với **Digital Pin D4** của VIETDUINO UNO.
 
 #### Chương trình
+
+Nạp chương trình sau vào **VIETDUINO UNO**:
 
 ```ino
 // Lesson 1: Digital Output - LED Blink
@@ -158,6 +158,257 @@ void loop() {
 ```
 
 #### Kết quả
+
+Sau khi chương trình được nạp thành công, **MKE-M01 LED Module** sẽ hoạt động theo chu kỳ:
+
+```text
+LED sáng
+   ↓
+Chờ 1 giây
+   ↓
+LED tắt
+   ↓
+Chờ 1 giây
+   ↓
+Lặp lại
+```
+
+**Kết quả thực tế:** LED sẽ **sáng trong 1 giây, tắt trong 1 giây và lặp lại liên tục**.
+
+#### Phân tích chương trình
+
+##### 1. Hàm `setup()`
+
+```ino
+void setup() {
+  pinMode(ledPin, OUTPUT);
+}
+```
+
+Hàm `setup()` được thực thi **một lần duy nhất** khi Arduino được cấp nguồn hoặc reset. Trong bài học này, hàm `setup()` được sử dụng để thiết lập chân D4 làm **ngõ ra (OUTPUT)**.
+
+```ino
+pinMode(ledPin, OUTPUT);
+```
+Lệnh `pinMode()` cấu hình chế độ hoạt động của một chân Digital là INPUT hoặc OUTPUT, trong đó:
+- `pin`: số chân cần thiết lập.
+- `mode`: chế độ hoạt động của chân.
+
+Vì `ledPin` có giá trị `4`, câu lệnh:
+
+```ino
+pinMode(ledPin, OUTPUT);
+```
+tương đương:
+```cpp
+pinMode(4, OUTPUT);
+```
+Arduino sẽ sử dụng chân **D4** để xuất tín hiệu điều khiển LED.
+
+### 2. Hàm `loop()`
+
+```cpp
+void loop() {
+  digitalWrite(ledPin, HIGH);
+  delay(1000);
+
+  digitalWrite(ledPin, LOW);
+  delay(1000);
+}
+```
+
+Sau khi hàm `setup()` hoàn thành, Arduino sẽ liên tục thực hiện các lệnh bên trong hàm `loop()`.
+
+Trong chương trình này, `loop()` thực hiện theo trình tự:
+
+```text
+Bật LED → Chờ 1 giây → Tắt LED → Chờ 1 giây → Quay lại đầu loop()
+```
+
+Do `loop()` được lặp liên tục nên LED sẽ nhấp nháy không ngừng.
+
+### 3. Khai báo biến `ledPin`
+
+```cpp
+int ledPin = 4;
+```
+
+Dòng lệnh này khai báo một biến có kiểu dữ liệu `int` với tên `ledPin` và giá trị `4`.
+
+```text
+ledPin = 4
+```
+
+Điều này cho biết LED được điều khiển thông qua **Digital Pin D4**.
+
+Việc sử dụng biến `ledPin` giúp chương trình dễ đọc và thuận tiện thay đổi chân điều khiển khi cần thiết.
+
+Ví dụ, nếu muốn chuyển LED sang chân D7, chỉ cần thay đổi:
+
+```cpp
+int ledPin = 7;
+```
+
+### 4. Hàm `pinMode()`
+
+```cpp
+pinMode(ledPin, OUTPUT);
+```
+
+Hàm `pinMode()` dùng để thiết lập chế độ hoạt động của một chân Digital.
+
+Arduino hỗ trợ các chế độ cơ bản:
+
+```text
+INPUT
+OUTPUT
+INPUT_PULLUP
+```
+
+Trong bài học này, chúng ta sử dụng:
+
+```cpp
+OUTPUT
+```
+
+để Arduino có thể xuất tín hiệu điều khiển LED.
+
+### 5. Bật LED bằng `digitalWrite()`
+
+```cpp
+digitalWrite(ledPin, HIGH);
+```
+
+Hàm `digitalWrite()` được sử dụng để đưa tín hiệu `HIGH` hoặc `LOW` đến một chân Digital.
+
+**Cú pháp:**
+
+```cpp
+digitalWrite(pin, value);
+```
+
+Trong đó:
+
+- `pin`: chân Digital cần điều khiển.
+- `value`: `HIGH` hoặc `LOW`.
+
+Khi thực hiện:
+
+```cpp
+digitalWrite(ledPin, HIGH);
+```
+
+Arduino đưa chân **D4** lên mức logic `HIGH`.
+
+Kết quả:
+
+```text
+D4 = HIGH
+↓
+Mức điện áp cao
+↓
+LED sáng
+```
+
+### 6. Tạo thời gian chờ bằng `delay()`
+
+```cpp
+delay(1000);
+```
+
+Hàm `delay()` tạm dừng chương trình trong khoảng thời gian được chỉ định, tính bằng **mili giây (ms)**.
+
+**Cú pháp:**
+
+```cpp
+delay(ms);
+```
+
+Trong đó:
+
+```text
+1000 ms = 1 giây
+```
+
+Vì vậy:
+
+```cpp
+delay(1000);
+```
+
+có nghĩa là Arduino sẽ chờ **1 giây** trước khi thực hiện lệnh tiếp theo.
+
+Trong chương trình, lệnh này được sử dụng sau khi bật LED để LED duy trì trạng thái sáng trong 1 giây.
+
+### 7. Tắt LED bằng `digitalWrite()`
+
+```cpp
+digitalWrite(ledPin, LOW);
+```
+
+Khi Arduino xuất tín hiệu `LOW` đến chân D4:
+
+```text
+D4 = LOW
+↓
+Mức điện áp thấp
+↓
+LED tắt
+```
+
+Sau đó chương trình tiếp tục thực hiện:
+
+```cpp
+delay(1000);
+```
+
+LED sẽ duy trì trạng thái tắt trong 1 giây.
+
+---
+
+## Tổng kết hoạt động của chương trình
+
+Toàn bộ chương trình có thể hiểu đơn giản như sau:
+
+```text
+┌─────────────────────┐
+│      setup()        │
+│  Thiết lập D4       │
+│     là OUTPUT       │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│       loop()        │
+├─────────────────────┤
+│ D4 = HIGH           │
+│ → LED sáng          │
+├─────────────────────┤
+│ delay(1000)         │
+│ → Chờ 1 giây        │
+├─────────────────────┤
+│ D4 = LOW            │
+│ → LED tắt           │
+├─────────────────────┤
+│ delay(1000)         │
+│ → Chờ 1 giây        │
+└──────────┬──────────┘
+           │
+           └──────→ Lặp lại
+```
+
+## Kiến thức đạt được
+
+Sau khi hoàn thành bài học này, bạn đã làm quen với:
+
+- Khái niệm **Digital Signal**.
+- Hai trạng thái `HIGH` và `LOW`.
+- **Digital Output** của Arduino.
+- Hàm `setup()`.
+- Hàm `loop()`.
+- Hàm `pinMode()`.
+- Hàm `digitalWrite()`.
+- Hàm `delay()`.
+- Cách điều khiển một thiết bị Output bằng Arduino.
 
 
 # Lesson 2 – Button điều khiển LED
