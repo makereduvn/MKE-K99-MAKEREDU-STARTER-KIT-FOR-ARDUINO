@@ -104,6 +104,7 @@ Làm quen với:
 - `digitalWrite()`.
 - `delay()`.
 **Kết nối**
+
 | Vietduino Uno + IO Shield | MKE-M01 | Chức năng |
 |---:|---|---:|
 | EX-5V | + | Nguồn dương 5VDC |
@@ -128,7 +129,7 @@ void loop() {
 }
 ```
 
-## Kết quả
+**Kết quả**
 
 LED:
 
