@@ -343,12 +343,11 @@ Phân tích kết nối:
 
 Nạp chương trình sau vào **VIETDUINO UNO**:
 
-```cpp
+```ino
 // Lesson 2: Button to turn ON/OFF LED
 
-const int buttonPin = 6;
-const int ledPin = 4;
-
+int buttonPin = 6;
+int ledPin = 4;
 int buttonState = 0;
 
 void setup() {
@@ -367,7 +366,7 @@ void loop() {
 }
 ```
 
-## Kết quả
+### Kết quả
 
 Sau khi chương trình được nạp thành công:
 
@@ -397,54 +396,50 @@ D4 = LOW
 LED tắt
 ```
 
-**Kết quả thực tế:** Khi **nhấn Button**, LED sẽ **sáng**. Khi **thả Button**, LED sẽ **tắt**.
+**Kết quả thực tế:** Khi nhấn Button LED sẽ sáng, khi thả Button LED sẽ tắt.
 
----
+### Phân tích chương trình
 
-## Phân tích chương trình
+#### 1. Khai báo chân Button và LED
 
-### 1. Khai báo chân Button và LED
-
-```cpp
-const int buttonPin = 6;
-const int ledPin = 4;
+```ino
+int buttonPin = 6;
+int ledPin = 4;
 ```
 
 - `buttonPin = 6`: Button được kết nối với **D6**.
 - `ledPin = 4`: LED được kết nối với **D4**.
 
-### 2. Khai báo biến `buttonState`
+#### 2. Khai báo biến `buttonState`
 
-```cpp
+```ino
 int buttonState = 0;
 ```
 
-Biến `buttonState` lưu trạng thái hiện tại của Button.
+Biến `buttonState` được dùng để lưu trạng thái hiện tại của Button.
 
 ```text
 HIGH → 1
 LOW  → 0
 ```
 
-### 3. Thiết lập LED là ngõ ra
+#### 3. Thiết lập chức năng
 
-```cpp
+```ino
 pinMode(ledPin, OUTPUT);
 ```
 
 Thiết lập chân D4 ở chế độ `OUTPUT` để VIETDUINO UNO có thể điều khiển LED.
 
-### 4. Thiết lập Button là ngõ vào
-
-```cpp
+```ino
 pinMode(buttonPin, INPUT);
 ```
 
 Thiết lập chân D6 ở chế độ `INPUT` để VIETDUINO UNO có thể đọc tín hiệu từ Button.
 
-### 5. Đọc trạng thái Button
+#### 4. Đọc trạng thái Button
 
-```cpp
+```ino
 buttonState = digitalRead(buttonPin);
 ```
 
@@ -452,13 +447,13 @@ Hàm `digitalRead()` dùng để đọc trạng thái Digital của một chân.
 
 **Cú pháp:**
 
-```cpp
+```ino
 digitalRead(pin);
 ```
 
 Trong bài học này, Arduino đọc chân D6 và lưu kết quả vào `buttonState`.
 
-### 6. Kiểm tra trạng thái bằng `if...else`
+#### 5. Kiểm tra trạng thái bằng `if...else`
 
 ```cpp
 if (buttonState == HIGH) {
@@ -474,64 +469,6 @@ Nếu Button ở trạng thái `HIGH`, LED được bật. Nếu không, LED đ�
 Button = HIGH → LED = HIGH → LED bật
 Button = LOW  → LED = LOW  → LED tắt
 ```
-
-### 7. Bật LED
-
-```cpp
-digitalWrite(ledPin, HIGH);
-```
-
-Khi Button được nhấn và `buttonState == HIGH`, Arduino xuất mức `HIGH` đến D4, làm LED bật.
-
-### 8. Tắt LED
-
-```cpp
-digitalWrite(ledPin, LOW);
-```
-
-Khi điều kiện không đúng, Arduino xuất mức `LOW` đến D4, làm LED tắt.
-
----
-
-## Tổng kết hoạt động
-
-```text
-             ┌──────────────────┐
-             │   Đọc Button D6  │
-             └────────┬─────────┘
-                      ↓
-                Button = HIGH?
-                 /          \
-               Có            Không
-               ↓               ↓
-          LED D4 = HIGH    LED D4 = LOW
-               ↓               ↓
-            LED sáng        LED tắt
-                 \          /
-                  └────┬─────┘
-                       ↓
-                   Lặp lại
-```
-
-## Kiến thức đạt được
-
-Sau khi hoàn thành bài học này, bạn đã làm quen với:
-
-- **Digital Input**.
-- Đọc trạng thái Digital bằng `digitalRead()`.
-- Sử dụng Button làm thiết bị đầu vào.
-- Sử dụng `if...else` để xử lý điều kiện.
-- Điều khiển LED dựa trên trạng thái của Button.
-- Kết hợp **Input → Control → Output** trong một chương trình Arduino.
-
-## Thử thách
-
-Sau khi hoàn thành bài học, hãy thử:
-
-1. Nhấn Button → LED tắt, thả Button → LED sáng.
-2. Nhấn Button → LED bật/tắt theo từng lần nhấn.
-3. Kết hợp Button và Buzzer để tạo cảnh báo.
-
 
 # Lesson 3 – Potentiometer điều khiển tốc độ LED
 
