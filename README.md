@@ -39,40 +39,44 @@
 
 ### Bước 1: Cài đặt Arduino IDE
 - Tải và cài đặt [Phần mềm Arduino IDE từ trang chủ Arduino](https://www.arduino.cc/en/software) phù hợp với hệ điều hành đang sử dụng.
+
 ### Bước 2: Kết nối mạch với máy tính
 - Kết nối Vietduino Uno với máy tính bằng cáp USB-C.
 - Khi kết nối thành công, LED nguồn (ON) trên mạch sẽ sáng.
+
 ### Bước 3: Cài đặt driver CH340
 - Vietduino Uno sử dụng IC CH340 để giao tiếp USB–UART.
 - Thông thường Driver sẽ tự nhận trên hầu hết các hệ điều hành, nếu máy tính chưa nhận driver, [tải và cài đặt Driver CH343P tại đây.](https://www.wch-ic.com/downloads/CH341SER_ZIP.html)
+
 ### Bước 4: Cấu hình mạch trong Arduino IDE
 Thực hiện các thiết lập sau trong Arduino IDE:
 - Chọn loại board: Tools → Board → Arduino AVR Boards → Arduino Uno
 - Chọn cổng kết nối (Port): Tools → Port → chọn cổng tương ứng với Vietduino Uno (nếu chưa xác định được, hãy rút cáp USB và cắm lại để nhận diện cổng mới xuất hiện)
 ![Vietduino Uno](/extras/VietduinoUno3.jpg)
-### Bước 5: Nạp chương trình thử nghiệm (Blink)
-Sau khi cấu hình xong, bạn có thể nạp chương trình Blink để kiểm tra mạch.
-Chương trình này sẽ làm LED_BUILTIN tại chân D13 chớp tắt mỗi 1 giây.
+
+### Bước 5: Nạp chương trình thử nghiệm (Hello Word!)
+Sau khi cấu hình xong, bạn có thể nạp chương trình "Hello Word!" để kiểm tra mạch.
+Chương trình này sẽ hiển thị ký tự "Hello Word!" lên Serial Monitor của phần mềm Arduino
 ```ino
 /*
-  Blink
-  Turns an LED_BUILTIN on D13 of Vietduino Uno for one second, then off for one second, repeatedly.
+  Hello World!
+  Gửi thông báo "Hello World!" đến Serial Monitor thông qua cổng Serial của VIETDUINO UNO.
 */
-// the setup function runs once when you press reset or power the board
+
 void setup() {
-  // initialize digital pin LED_BUILTIN on D13 as an output.
-  pinMode(13, OUTPUT);
+  // Khởi tạo giao tiếp Serial với tốc độ 9600 baud
+  Serial.begin(9600);
+
+  // Gửi thông báo khởi động
+  Serial.println("Start!");
 }
 
-// the loop function runs over and over again forever
 void loop() {
-  digitalWrite(13, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);                      // wait for a second
-  digitalWrite(13, LOW);   // turn the LED off by making the voltage LOW
-  delay(1000);                      // wait for a second
+  // Gửi "Hello World!" mỗi 1 giây
+  Serial.println("Hello World!");
+  delay(1000);
 }
 ```
-![Vietduino Uno](/extras/VietduinoUno4.jpg)
 
 ### Bước 6: Cài đặt bộ thư viện MKE-ONE trên phần mềm Arduino
 Tại giao diện chính của phần mềm Arduino:
@@ -97,12 +101,15 @@ MKE-B03 Vietduino IO Shield giúp người dùng dễ dàng đấu nối mà kh�
 ## Các bài thực hành
 
 ### Bài 1 – LED nhấp nháy
+
 **Mục tiêu**
+
 Làm quen với:
 - Digital Output.
 - `pinMode()`.
 - `digitalWrite()`.
 - `delay()`.
+
 **Kết nối**
 
 | Vietduino Uno + IO Shield | MKE-M01 | Chức năng |
@@ -139,7 +146,6 @@ OFF → 1 giây
 ```
 
 sau đó lặp lại.
-
 
 # Lesson 2 – Button điều khiển LED
 
