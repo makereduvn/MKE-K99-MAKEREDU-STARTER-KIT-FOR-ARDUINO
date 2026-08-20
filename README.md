@@ -74,15 +74,22 @@ void loop() {
 ```
 ![Vietduino Uno](/extras/VietduinoUno4.jpg)
 
+### Bước 6: Cài đặt bộ thư viện MKE-ONE trên phần mềm Arduino
+Tại giao diện chính của phần mềm Arduino:
+- Trong **Tools / Library Manager**, tìm và cài đặt bộ thư viện tổng hợp **"MKE_ONE" by MakerEdu.vn**
+- Các chương trình mẫu trong mỗi bài học sẽ có tại tại **File / Examples / MKE_ONE / Kit / MKE-K99 MakerEDU Starter Kit for Arduino**
+- Nạp chương trình, sau đó kết nối các phần cứng theo hướng dẫn trong mỗi bài học.
+- Xem kết quả mạch hoạt động theo chương trình đã nạp.
+
 ## Hướng dẫn kết nối Vietduino Uno với MKE-B03 Vietduino IO Shield
 
-Mạch đế kết nối MKE-B03 Vietduino IO Shield là bo mở rộng chân chuyên dụng cho các mạch Vietduino, được phát triển bởi MakerEDU nhằm giúp việc kết nối cảm biến và module chức năng trở nên nhanh chóng, trực quan và an toàn hơn. Mạch sử dụng chuẩn kết nối rào đực 2.54 mm (0.1″ male header) linh hoạt với bố trí màu sắc rõ ràng:
+Mạch đế kết nối MKE-B03 Vietduino IO Shield là bo mở rộng chân chuyên dụng cho các Vietduino Uno, được phát triển bởi MakerEDU nhằm giúp việc kết nối cảm biến và module chức năng trở nên nhanh chóng, trực quan và an toàn hơn. Mạch sử dụng chuẩn kết nối rào đực 2.54 mm (0.1″ male header) linh hoạt với bố trí màu sắc rõ ràng:
 
 - Vàng, Xanh Lá: chân tín hiệu
 - Đỏ: Chân nguồn dương
 - Đen: Chân nguồn âm
-- 
-MKE-B03 Vietduino IO Shield giúp người dùng dễ dàng đấu nối mà không lo nhầm cực khi triển khai các dự án học tập STEM, IoT hoặc robot. Toàn bộ các chân GPIO của mạch Vietduino được đưa ra đầy đủ kèm theo cặp nguồn 5V – GND, giúp cấp nguồn trực tiếp cho cảm biến và module ngoại vi. Ngoài ra, mạch còn tích hợp nhiều cổng I2C với chuẩn màu riêng biệt (GND - Đen, 5V- Đỏ, SDA - Vàng, SCL - Xanh Lá), thuận tiện cho việc mở rộng hệ thống với các module, cảm biến giao tiếp I2C.
+
+MKE-B03 Vietduino IO Shield giúp người dùng dễ dàng đấu nối mà không lo nhầm cực khi triển khai các dự án học tập STEM, IoT hoặc robot. Toàn bộ các chân GPIO của mạch Vietduino Uno được đưa ra đầy đủ kèm theo cặp nguồn 5V – GND, giúp cấp nguồn trực tiếp cho cảm biến và module ngoại vi. Ngoài ra, mạch còn tích hợp nhiều cổng I2C với chuẩn màu riêng biệt (GND - Đen, 5V- Đỏ, SDA - Vàng, SCL - Xanh Lá), thuận tiện cho việc mở rộng hệ thống với các module, cảm biến giao tiếp I2C.
 
 **Kết nối mạch như hình, khi đó phần chân IO trên Shield ký hiệu AR (Arduino) chính là các chân tín hiệu của Vietduino Uno:**
 ![Vietduino Uno](/extras/VietduinoUno4.jpg)
