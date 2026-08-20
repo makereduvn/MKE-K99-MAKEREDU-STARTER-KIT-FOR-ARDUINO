@@ -100,52 +100,65 @@ MKE-B03 Vietduino IO Shield giúp người dùng dễ dàng đấu nối mà kh�
 
 ## Các bài thực hành
 
-### Bài 1 – LED nhấp nháy
+### Bài 1 – Điều khiển LED bằng tín hiệu Digital
 
-**Mục tiêu**
+Chúng ta sẽ bắt đầu làm quen với việc điều khiển phần cứng bằng Arduino thông qua bài học đầu tiên: **điều khiển LED**.
 
-Làm quen với:
-- Digital Output.
-- `pinMode()`.
-- `digitalWrite()`.
-- `delay()`.
+Trong một hệ thống điều khiển cơ bản có thể chia thành ba thành phần:
 
-**Kết nối**
+- **Input (Đầu vào):** nhận tín hiệu từ nút nhấn, cảm biến...
+- **Control (Điều khiển):** xử lý tín hiệu và đưa ra quyết định.
+- **Output (Đầu ra):** thực hiện hành động như bật LED, phát âm thanh...
 
-| Vietduino Uno + IO Shield | MKE-M01 | Chức năng |
-|:---:|:---:|:---|
-| EX-5V | + | Nguồn dương 5VDC |
-| GND | - | Nguồn âm 0VDC |
-| AR-4 | S | Chân tín hiệu Digital |
+Trong bài học này, chúng ta chỉ sử dụng **Output**. **VIETDUINO UNO** đóng vai trò là bộ điều khiển, **MKE-M01 LED Module** là thiết bị đầu ra và tín hiệu điều khiển là **tín hiệu Digital**.
 
-**Code**
+#### Tín hiệu Digital là gì?
 
-```cpp
-const int LED_PIN = 4;
+**Digital Signal (tín hiệu số)** là tín hiệu chỉ có một số trạng thái xác định. Với Arduino UNO, tín hiệu Digital cơ bản có hai trạng thái:
+
+| Trạng thái | Giá trị | Mức điện áp |
+|---|:---:|:---:|
+| `LOW` | `0` | 0VDC |
+| `HIGH` | `1` | 5VDC |
+
+Khi Arduino xuất tín hiệu `HIGH` đến chân điều khiển LED, LED sẽ bật. Khi xuất tín hiệu `LOW`, LED sẽ tắt.
+
+---
+
+#### Kết nối
+
+| VIETDUINO UNO + IO SHIELD | MKE-M01 1-LED 10MM MODULE  | Chức năng |
+|:---:|:---:|---|
+| `EX-5V` | `+` | Nguồn dương 5VDC |
+| `GND` | `-` | Nguồn âm 0VDC |
+| `AR-4` | `S` | Tín hiệu Digital |
+
+> **Lưu ý:** Trong bài học này, chân tín hiệu của LED được kết nối với **Digital Pin D4** của VIETDUINO UNO.
+
+---
+
+#### Chương trình
+
+```ino
+// Lesson 1: Digital Output - LED Blink
+
+int ledPin = 4;
 
 void setup() {
-  pinMode(LED_PIN, OUTPUT);
+  pinMode(ledPin, OUTPUT);
 }
 
 void loop() {
-  digitalWrite(LED_PIN, HIGH);
+  digitalWrite(ledPin, HIGH);
   delay(1000);
 
-  digitalWrite(LED_PIN, LOW);
+  digitalWrite(ledPin, LOW);
   delay(1000);
 }
 ```
 
-**Kết quả**
+#### Kết quả
 
-LED:
-
-```text
-ON  → 1 giây
-OFF → 1 giây
-```
-
-sau đó lặp lại.
 
 # Lesson 2 – Button điều khiển LED
 
