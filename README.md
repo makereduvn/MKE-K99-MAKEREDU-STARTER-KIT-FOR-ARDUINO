@@ -470,55 +470,355 @@ Button = HIGH → LED = HIGH → LED bật
 Button = LOW  → LED = LOW  → LED tắt
 ```
 
-# Lesson 3 – Potentiometer điều khiển tốc độ LED
+# Lesson 3: Điều khiển tốc độ nhấp nháy của LED bằng Potentiometer
 
-## Mục tiêu
+## Giới thiệu
 
-Làm quen với:
+Ở bài học trước, chúng ta đã biết **Button** chỉ có hai trạng thái Digital là `HIGH` và `LOW`, tương ứng với hai mức tín hiệu cơ bản. Tuy nhiên, trong thực tế chúng ta thường cần nhiều mức giá trị khác nhau thay vì chỉ có hai trạng thái.
 
-- Analog Input.
-- ADC.
-- `analogRead()`.
+Để đọc những giá trị thay đổi liên tục, chúng ta sử dụng **tín hiệu Analog**. **Potentiometer (biến trở xoay)** là một ví dụ điển hình của thiết bị tạo ra tín hiệu Analog.
+
+Trong bài học này, **MKE-M04 POTENTIOMETER RGYBW MODULE** được sử dụng làm thiết bị **Input**, **VIETDUINO UNO** đảm nhiệm việc đọc và xử lý tín hiệu, còn **MKE-M01 1-LED 10MM RGYBW MODULE** là thiết bị **Output**.
+
+```text
+Potentiometer → VIETDUINO UNO → LED
+     Input           Control      Output
+```
+
+### Tín hiệu Analog là gì?
+
+**Analog Signal (tín hiệu tương tự)** là tín hiệu có giá trị thay đổi liên tục theo thời gian và biên độ.
+
+Trên Arduino UNO, bộ chuyển đổi Analog-to-Digital Converter (**ADC**) có độ phân giải **10-bit**, chuyển điện áp đầu vào trong khoảng `0V` đến `5V` thành giá trị số từ:
+
+```text
+0 → 1023
+```
+
+Ví dụ:
+
+| Điện áp đầu vào | Giá trị đọc |
+|:---:|:---:|
+| `0V` | `0` |
+| `2.5V` | khoảng `512` |
+| `5V` | `1023` |
+
+Khi xoay Potentiometer, giá trị Analog đọc được sẽ thay đổi. Trong bài học này, giá trị đó được sử dụng để thay đổi **thời gian nhấp nháy của LED**.
+
+---
 
 ## Kết nối
+
+Kết nối các module với **MKE-B03 VIETDUINO IO SHIELD** như sau:
+
+| VIETDUINO UNO + IO SHIELD | Module | Chức năng |
+|:---:|:---|:---|
+| `EX-5V` | MKE-M01 `+` / MKE-M04 `+` | Nguồn dương 5VDC |
+| `GND` | MKE-M01 `-` / MKE-M04 `-` | Nguồn âm 0VDC |
+| `AR-4` | MKE-M01 `S` | Tín hiệu Digital của LED |
+| `AA-0` | MKE-M04 `S` | Tín hiệu Analog của Potentiometer |
+
+### Phân tích kết nối
+
+- **Input:** MKE-M04 Potentiometer.
+- **Control:** VIETDUINO UNO.
+- **Output:** MKE-M01 LED Module.
+- Potentiometer tạo ra **tín hiệu Analog**, vì vậy được kết nối với ngõ vào Analog `A0`.
+- LED sử dụng **tín hiệu Digital**, vì vậy được kết nối với chân Digital `D4`.
+
+> **Lưu ý:** Theo cấu hình của MKE-K99, Potentiometer sử dụng **A0** và LED sử dụng **D4**.
+
+---
+
+## Chương trình
+
+Nạp chương trình sau vào **VIETDUINO UNO**:
+
+```cpp
+// Lesson 3: Potentiometer controls LED blink frequency
+
+int rotaryPin = A0;    // Select the input pin for the potentiometer
+int ledPin = 4;        // Select the pin for the LED
+int rotaryValue = 0;   // Variable to store the value from the potentiometer
+
+void setup() {
+  // Declare the LED pin as an OUTPUT
+  pinMode(ledPin, OUTPUT);
+
+  // Declare the potentiometer pin as an INPUT
+  pinMode(rotaryPin, INPUT);
+}
+
+void loop() {
+  // Read the value from the potentiometer
+  rotaryValue = analogRead(rotaryPin);
+
+  // Turn the LED on
+  digitalWrite(ledPin, HIGH);
+
+  // Wait according to the potentiometer value
+  delay(rotaryValue);
+
+  // Turn the LED off
+  digitalWrite(ledPin, LOW);
+
+  // Wait according to the potentiometer value
+  delay(rotaryValue);
+}
+```
+
+## Kết quả
+
+Sau khi chương trình được nạp thành công, xoay **MKE-M04 Potentiometer** để quan sát tốc độ nhấp nháy của LED.
+
+```text
+Xoay Potentiometer
+       ↓
+Giá trị Analog thay đổi
+       ↓
+analogRead(A0)
+       ↓
+rotaryValue thay đổi
+       ↓
+Thời gian delay thay đổi
+       ↓
+Tốc độ nhấp nháy LED thay đổi
+```
+
+### Quan sát thực tế
+
+- Khi giá trị Potentiometer **nhỏ** → `delay()` nhỏ → LED nhấp nháy **nhanh**.
+- Khi giá trị Potentiometer **lớn** → `delay()` lớn → LED nhấp nháy **chậm**.
+
+**Kết quả:** Xoay Potentiometer sẽ làm thay đổi **tốc độ nhấp nháy của LED**.
+
+> **Lưu ý:** Trong chương trình này, giá trị đọc từ Potentiometer được sử dụng trực tiếp làm thời gian `delay()` nên tốc độ nhấp nháy thay đổi trong khoảng tương ứng với giá trị ADC `0–1023`.
+
+---
+
+## Phân tích chương trình
+
+### 1. Khai báo chân Potentiometer và LED
+
+```cpp
+int rotaryPin = A0;
+int ledPin = 4;
+```
+
+Hai thiết bị sử dụng hai loại tín hiệu khác nhau:
+
+- Potentiometer tạo ra **tín hiệu Analog**.
+- LED được điều khiển bằng **tín hiệu Digital**.
+
+Vì vậy, cách khai báo chân cũng khác nhau:
+
+```text
+Analog Pin  → A + số chân
+Digital Pin → số chân
+```
+
+Trong chương trình:
+
+```cpp
+rotaryPin = A0;
+ledPin = 4;
+```
+
+tương ứng với:
 
 ```text
 Potentiometer → A0
 LED           → D4
 ```
 
-## Code
+---
+
+### 2. Khai báo biến `rotaryValue`
 
 ```cpp
-const int POT_PIN = A0;
-const int LED_PIN = 4;
-
-void setup() {
-  pinMode(POT_PIN, INPUT);
-  pinMode(LED_PIN, OUTPUT);
-}
-
-void loop() {
-  int value = analogRead(POT_PIN);
-
-  digitalWrite(LED_PIN, HIGH);
-  delay(value);
-
-  digitalWrite(LED_PIN, LOW);
-  delay(value);
-}
+int rotaryValue = 0;
 ```
 
-## Kết quả
+Biến `rotaryValue` được sử dụng để lưu giá trị đọc từ Potentiometer.
 
-Xoay potentiometer:
+Giá trị này nằm trong khoảng:
 
-- Giá trị nhỏ → LED nhấp nháy nhanh.
-- Giá trị lớn → LED nhấp nháy chậm.
+```text
+0 → 1023
+```
 
-Tài liệu tham khảo sử dụng A0 cho potentiometer và minh họa việc dùng giá trị `analogRead()` để thay đổi thời gian `delay()`. fileciteturn1file2L236-L298
+tùy thuộc vào vị trí xoay của Potentiometer.
 
 ---
+
+### 3. Thiết lập LED là ngõ ra
+
+```cpp
+pinMode(ledPin, OUTPUT);
+```
+
+Thiết lập chân D4 ở chế độ `OUTPUT`.
+
+Arduino sẽ sử dụng chân này để xuất tín hiệu Digital điều khiển LED.
+
+---
+
+### 4. Thiết lập Potentiometer là ngõ vào
+
+```cpp
+pinMode(rotaryPin, INPUT);
+```
+
+Thiết lập chân A0 ở chế độ `INPUT` để Arduino có thể đọc tín hiệu từ Potentiometer.
+
+---
+
+### 5. Đọc giá trị Analog bằng `analogRead()`
+
+```cpp
+rotaryValue = analogRead(rotaryPin);
+```
+
+Hàm `analogRead()` được sử dụng để đọc giá trị từ một chân Analog.
+
+**Cú pháp:**
+
+```cpp
+analogRead(pin);
+```
+
+Trong đó:
+
+- `pin`: chân Analog cần đọc.
+
+Trên Arduino UNO, ADC có độ phân giải 10-bit nên giá trị đọc nằm trong khoảng:
+
+```text
+0 → 1023
+```
+
+Ví dụ:
+
+```text
+0V    → 0
+2.5V  → khoảng 512
+5V    → 1023
+```
+
+Khi xoay Potentiometer, điện áp tại A0 thay đổi và giá trị `rotaryValue` cũng thay đổi theo.
+
+---
+
+### 6. Bật LED
+
+```cpp
+digitalWrite(ledPin, HIGH);
+```
+
+Arduino xuất tín hiệu `HIGH` đến chân D4, làm LED bật.
+
+---
+
+### 7. Điều khiển thời gian sáng bằng `delay()`
+
+```cpp
+delay(rotaryValue);
+```
+
+Đây là phần quan trọng của bài học.
+
+Giá trị trong `delay()` không còn là một con số cố định mà được lấy trực tiếp từ Potentiometer:
+
+```text
+rotaryValue → delay()
+```
+
+Ví dụ:
+
+```text
+rotaryValue = 100
+→ delay(100)
+→ LED chờ 100 ms
+```
+
+Hoặc:
+
+```text
+rotaryValue = 800
+→ delay(800)
+→ LED chờ 800 ms
+```
+
+Vì vậy, khi xoay Potentiometer, thời gian LED duy trì trạng thái sáng cũng thay đổi.
+
+---
+
+### 8. Tắt LED
+
+```cpp
+digitalWrite(ledPin, LOW);
+```
+
+Arduino xuất mức `LOW` đến chân D4, làm LED tắt.
+
+Sau đó chương trình tiếp tục:
+
+```cpp
+delay(rotaryValue);
+```
+
+Thời gian LED tắt cũng được điều khiển bởi giá trị của Potentiometer.
+
+---
+
+## Tổng kết hoạt động
+
+Toàn bộ chương trình có thể hiểu đơn giản như sau:
+
+```text
+┌──────────────────────────┐
+│  Đọc giá trị A0          │
+│  analogRead(A0)          │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ rotaryValue = 0 → 1023  │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│       LED = HIGH         │
+│       LED sáng           │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│   delay(rotaryValue)     │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│       LED = LOW          │
+│       LED tắt            │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│   delay(rotaryValue)     │
+└────────────┬─────────────┘
+             │
+             └──────→ Lặp lại
+```
+
+## Kiến thức đạt được
+
+Sau khi hoàn thành bài học này, bạn đã làm quen với:
+
+- Khái niệm **Analog Signal**.
+- Sự khác nhau giữa **Analog Input** và **Digital Output**.
+- Bộ chuyển đổi ADC 10-bit của Arduino UNO.
+- Giá trị Analog từ `0` đến `1023`.
+- Hàm `analogRead()`.
+- Đọc giá trị từ Potentiometer.
+- Sử dụng giá trị cảm biến để điều khiển chương trình.
+- Điều khiển thời gian nhấp nháy của LED bằng giá trị Analog.
+
 
 # Lesson 4 – Buzzer
 
