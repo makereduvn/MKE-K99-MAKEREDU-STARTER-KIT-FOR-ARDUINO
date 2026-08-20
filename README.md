@@ -177,7 +177,23 @@ Lặp lại
 
 ### Phân tích chương trình
 
-#### 1. Hàm `setup()`
+#### 1. Khai báo biến `ledPin`
+
+```ino
+int ledPin = 4;
+```
+
+Dòng lệnh này khai báo một biến có kiểu dữ liệu `int` với tên `ledPin` và giá trị `4`, điều này cho biết LED được điều khiển thông qua **Digital Pin D4**.
+
+Việc sử dụng biến `ledPin` giúp chương trình dễ đọc và thuận tiện thay đổi chân điều khiển khi cần thiết.
+
+Ví dụ, nếu muốn chuyển LED sang chân D7, chỉ cần thay đổi:
+
+```ino
+int ledPin = 7;
+```
+
+#### 2. Hàm `setup()`
 
 ```ino
 void setup() {
@@ -205,7 +221,7 @@ pinMode(4, OUTPUT);
 ```
 Arduino sẽ sử dụng chân **D4** để xuất tín hiệu điều khiển LED.
 
-#### 2. Hàm `loop()`
+#### 3. Hàm `loop()`
 
 ```ino
 void loop() {
@@ -227,72 +243,17 @@ Bật LED → Chờ 1 giây → Tắt LED → Chờ 1 giây → Quay lại đầ
 
 Do `loop()` được lặp liên tục nên LED sẽ nhấp nháy không ngừng.
 
-### 3. Khai báo biến `ledPin`
+#### 4. Bật / tắt LED bằng `digitalWrite()`
 
-```cpp
-int ledPin = 4;
-```
-
-Dòng lệnh này khai báo một biến có kiểu dữ liệu `int` với tên `ledPin` và giá trị `4`.
-
-```text
-ledPin = 4
-```
-
-Điều này cho biết LED được điều khiển thông qua **Digital Pin D4**.
-
-Việc sử dụng biến `ledPin` giúp chương trình dễ đọc và thuận tiện thay đổi chân điều khiển khi cần thiết.
-
-Ví dụ, nếu muốn chuyển LED sang chân D7, chỉ cần thay đổi:
-
-```cpp
-int ledPin = 7;
-```
-
-### 4. Hàm `pinMode()`
-
-```cpp
-pinMode(ledPin, OUTPUT);
-```
-
-Hàm `pinMode()` dùng để thiết lập chế độ hoạt động của một chân Digital.
-
-Arduino hỗ trợ các chế độ cơ bản:
-
-```text
-INPUT
-OUTPUT
-INPUT_PULLUP
-```
-
-Trong bài học này, chúng ta sử dụng:
-
-```cpp
-OUTPUT
-```
-
-để Arduino có thể xuất tín hiệu điều khiển LED.
-
-### 5. Bật LED bằng `digitalWrite()`
-
-```cpp
-digitalWrite(ledPin, HIGH);
-```
-
-Hàm `digitalWrite()` được sử dụng để đưa tín hiệu `HIGH` hoặc `LOW` đến một chân Digital.
-
-**Cú pháp:**
-
-```cpp
+```ino
 digitalWrite(pin, value);
 ```
 
-Trong đó:
-
+Hàm `digitalWrite()` được sử dụng để đưa tín hiệu `HIGH` hoặc `LOW` đến một chân Digital, trong đó:
 - `pin`: chân Digital cần điều khiển.
 - `value`: `HIGH` hoặc `LOW`.
 
-Khi thực hiện:
+**Khi thực hiện:**
 
 ```cpp
 digitalWrite(ledPin, HIGH);
@@ -309,44 +270,15 @@ Mức điện áp cao
 ↓
 LED sáng
 ```
-
-### 6. Tạo thời gian chờ bằng `delay()`
-
-```cpp
-delay(1000);
-```
-
-Hàm `delay()` tạm dừng chương trình trong khoảng thời gian được chỉ định, tính bằng **mili giây (ms)**.
-
-**Cú pháp:**
-
-```cpp
-delay(ms);
-```
-
-Trong đó:
-
-```text
-1000 ms = 1 giây
-```
-
-Vì vậy:
-
-```cpp
-delay(1000);
-```
-
-có nghĩa là Arduino sẽ chờ **1 giây** trước khi thực hiện lệnh tiếp theo.
-
-Trong chương trình, lệnh này được sử dụng sau khi bật LED để LED duy trì trạng thái sáng trong 1 giây.
-
-### 7. Tắt LED bằng `digitalWrite()`
+**Khi thực hiện:**
 
 ```cpp
 digitalWrite(ledPin, LOW);
 ```
 
-Khi Arduino xuất tín hiệu `LOW` đến chân D4:
+Arduino đưa chân **D4** lên mức logic `LOW`.
+
+Kết quả:
 
 ```text
 D4 = LOW
@@ -356,17 +288,25 @@ Mức điện áp thấp
 LED tắt
 ```
 
-Sau đó chương trình tiếp tục thực hiện:
+#### 5. Tạo thời gian chờ bằng `delay()`
 
-```cpp
+```ino
+delay(ms);
+```
+
+Hàm `delay()` tạm dừng chương trình trong khoảng thời gian được chỉ định, tính bằng **mili giây (ms)**.
+
+Vì vậy:
+
+```ino
 delay(1000);
 ```
 
-LED sẽ duy trì trạng thái tắt trong 1 giây.
+có nghĩa là Arduino sẽ chờ **1 giây (1000ms)** trước khi thực hiện lệnh tiếp theo.
 
----
+Trong chương trình, lệnh này được sử dụng sau khi bật / tắt LED để LED duy trì trạng thái trong 1 giây.
 
-# Lesson 2 – Button điều khiển LED
+## Bài 2 – Điều khiển Led bằng nút nhấn
 
 ## Mục tiêu
 
