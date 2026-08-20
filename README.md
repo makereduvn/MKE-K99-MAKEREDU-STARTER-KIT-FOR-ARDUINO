@@ -96,26 +96,21 @@ MKE-B03 Vietduino IO Shield giúp người dùng dễ dàng đấu nối mà kh�
 
 ## Các bài thực hành
 
-# Lesson 1 – LED nhấp nháy
-
-## Mục tiêu
-
+### Bài 1 – LED nhấp nháy
+**Mục tiêu**
 Làm quen với:
-
 - Digital Output.
 - `pinMode()`.
 - `digitalWrite()`.
 - `delay()`.
+**Kết nối**
+| Vietduino Uno + IO Shield | MKE-M01 | Chức năng |
+|---:|---|---:|
+| EX-5V | + | Nguồn dương 5VDC |
+| GND | - | Nguồn âm 0VDC |
+| AR-4 | S | Chân tín hiệu Digital |
 
-## Kết nối
-
-LED mặc định:
-
-```text
-LED → D4
-```
-
-## Code
+**Code**
 
 ```cpp
 const int LED_PIN = 4;
@@ -144,9 +139,6 @@ OFF → 1 giây
 
 sau đó lặp lại.
 
-Tài liệu tham khảo sử dụng D4 cho LED và giải thích `pinMode()`, `digitalWrite()` và `delay()` qua chính bài học này. fileciteturn3file0L197-L229
-
----
 
 # Lesson 2 – Button điều khiển LED
 
