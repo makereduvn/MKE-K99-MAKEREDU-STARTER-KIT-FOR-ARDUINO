@@ -113,7 +113,7 @@ Làm quen với:
 **Kết nối**
 
 | Vietduino Uno + IO Shield | MKE-M01 | Chức năng |
-|:---|---|:---|
+|:---:|:---:|:---|
 | EX-5V | + | Nguồn dương 5VDC |
 | GND | - | Nguồn âm 0VDC |
 | AR-4 | S | Chân tín hiệu Digital |
