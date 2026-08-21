@@ -81,7 +81,7 @@ void loop() {
 ### Bước 6: Cài đặt bộ thư viện MKE-ONE trên phần mềm Arduino
 Tại giao diện chính của phần mềm Arduino:
 - Trong **Tools / Library Manager**, tìm và cài đặt bộ thư viện tổng hợp **"MKE_ONE" by MakerEdu.vn**
-- Các chương trình mẫu trong mỗi bài học sẽ có tại tại **File / Examples / MKE_ONE / Kit / MKE-K99 MakerEDU Starter Kit for Arduino**
+- Các chương trình mẫu trong mỗi bài học sẽ có tại tại **File / Examples / MKE_ONE / Kit / MKE_K99_Arduino_Starter_Kit
 - Nạp chương trình, sau đó kết nối các phần cứng theo hướng dẫn trong mỗi bài học.
 - Xem kết quả mạch hoạt động theo chương trình đã nạp.
 
