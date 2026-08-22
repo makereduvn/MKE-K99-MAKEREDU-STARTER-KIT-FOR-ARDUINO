@@ -125,7 +125,7 @@ Khi Arduino xuất tín hiệu `HIGH` đến chân điều khiển LED, LED sẽ
 
 ### Kết nối
 
-Kết nối **MKE-M01 1-LED 10MM RGYBW MODULE** với **MKE-B03 VIETDUINO IO SHIELD** như sau:
+Kết nối **MKE-M01 1-LED 10MM RGYBW MODULE** như sau:
 
 | VIETDUINO UNO + IO SHIELD | MKE-M01 | Chức năng |
 |:---:|:---:|:---|
@@ -206,7 +206,7 @@ Hàm `setup()` được thực thi **một lần duy nhất** khi Arduino đư�
 ```ino
 pinMode(ledPin, OUTPUT);
 ```
-Lệnh `pinMode()` cấu hình chế độ hoạt động của một chân Digital là INPUT hoặc OUTPUT, trong đó:
+Lệnh `pinMode()` cấu hình chế độ hoạt động của một chân Digital là INPUT (nhận tín hiệu) hoặc OUTPUT (xuất tín hiệu), trong đó:
 - `pin`: số chân cần thiết lập.
 - `mode`: chế độ hoạt động của chân.
 
@@ -255,7 +255,7 @@ Hàm `digitalWrite()` được sử dụng để đưa tín hiệu `HIGH` hoặc
 
 **Khi thực hiện:**
 
-```cpp
+```ino
 digitalWrite(ledPin, HIGH);
 ```
 
@@ -272,7 +272,7 @@ LED sáng
 ```
 **Khi thực hiện:**
 
-```cpp
+```ino
 digitalWrite(ledPin, LOW);
 ```
 
