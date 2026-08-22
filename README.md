@@ -133,7 +133,7 @@ Kết nối **MKE-M01 1-LED 10MM RGYBW MODULE** như sau:
 | `GND` | `-` | Nguồn âm 0VDC |
 | `AR-4` | `S` | Tín hiệu Digital |
 
-> **Lưu ý:** Chân tín hiệu `S` của MKE-M01 được kết nối với **Digital Pin D4** của VIETDUINO UNO.
+> **Lưu ý:** Module LED sử dụng chân **D4** của VIETDUINO UNO.
 
 ### Chương trình
 
@@ -308,7 +308,7 @@ Trong chương trình, lệnh này được sử dụng sau khi bật / tắt LE
 
 ## Bài 2 – Sử dụng nút nhấn Button để điều khiển LED
 
-Ở bài học trước, chúng ta đã sử dụng tín hiệu Digital để điều khiển LED. Trong bài học này, chúng ta sẽ tìm hiểu cách **đọc tín hiệu đầu vào (Input) từ nút nhấn Button** và sử dụng tín hiệu đó để điều khiển LED.
+Ở bài học trước, chúng ta đã sử dụng tín hiệu Digital để điều khiển LED. Trong bài học này, chúng ta sẽ tìm hiểu cách **nhận tín hiệu đầu vào (Input) từ nút nhấn Button** và sử dụng tín hiệu đó để điều khiển LED.
 
 Nút nhấn Button sử dụng **tín hiệu Digital**, chỉ có hai trạng thái `HIGH` và `LOW`. Dựa vào trạng thái của nút nhấn Button, VIETDUINO UNO có thể quyết định bật hoặc tắt LED.
 
@@ -332,12 +332,11 @@ Kết nối **MKE-M02 BUTTON RGYBW MODULE** như sau:
 
 Phân tích kết nối:
 
-- **Input:** MKE-M02 Button Module.
 - **Control:** VIETDUINO UNO.
+- **Input:** MKE-M02 Button Module.
 - **Output:** MKE-M01 LED Module.
-- Nút nhấn Button và LED đều sử dụng **tín hiệu Digital**.
 
-> **Lưu ý:** LED sử dụng **D4** và nút nhấn Button sử dụng **D6**.
+> **Lưu ý:** LED sử dụng **D4** và nút nhấn Button sử dụng **D6** của **Vietduino Uno**.
 
 ### Chương trình
 
