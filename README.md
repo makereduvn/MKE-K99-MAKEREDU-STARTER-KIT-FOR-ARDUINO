@@ -336,7 +336,7 @@ Phân tích kết nối:
 - **Input:** MKE-M02 Button Module.
 - **Output:** MKE-M01 LED Module.
 
-> **Lưu ý:** LED sử dụng **D4** và nút nhấn Button sử dụng **D6** của **Vietduino Uno**.
+> **Lưu ý:** Module LED sử dụng chân **D4** và Module Button sử dụng chân **D6** của VIETDUINO UNO.
 
 ### Chương trình
 
@@ -454,7 +454,7 @@ Trong bài học này, Arduino đọc chân D6 và lưu kết quả vào `button
 
 #### 5. Kiểm tra trạng thái bằng `if...else`
 
-```cpp
+```ino
 if (buttonState == HIGH) {
   digitalWrite(ledPin, HIGH);
 } else {
@@ -469,15 +469,15 @@ Button = HIGH → LED = HIGH → LED bật
 Button = LOW  → LED = LOW  → LED tắt
 ```
 
-# Lesson 3: Điều khiển tốc độ nhấp nháy của LED bằng Potentiometer
+# Lesson 3: Điều khiển tốc độ nhấp nháy của LED bằng biến trở Potentiometer
 
 ## Giới thiệu
 
 Ở bài học trước, chúng ta đã biết **Button** chỉ có hai trạng thái Digital là `HIGH` và `LOW`, tương ứng với hai mức tín hiệu cơ bản. Tuy nhiên, trong thực tế chúng ta thường cần nhiều mức giá trị khác nhau thay vì chỉ có hai trạng thái.
 
-Để đọc những giá trị thay đổi liên tục, chúng ta sử dụng **tín hiệu Analog**. **Potentiometer (biến trở xoay)** là một ví dụ điển hình của thiết bị tạo ra tín hiệu Analog.
+Để đọc những giá trị thay đổi liên tục, chúng ta sử dụng **tín hiệu Analog**. **Potentiometer (biến trở)** là một ví dụ điển hình của thiết bị tạo ra tín hiệu Analog.
 
-Trong bài học này, **MKE-M04 POTENTIOMETER RGYBW MODULE** được sử dụng làm thiết bị **Input**, **VIETDUINO UNO** đảm nhiệm việc đọc và xử lý tín hiệu, còn **MKE-M01 1-LED 10MM RGYBW MODULE** là thiết bị **Output**.
+Trong bài học này, **MKE-M04 POTENTIOMETER RGYBW MODULE** được sử dụng làm thiết bị **Input**, **VIETDUINO UNO** đảm nhiệm việc **Control** đọc và xử lý tín hiệu, còn **MKE-M01 1-LED 10MM RGYBW MODULE** là thiết bị **Output**.
 
 ```text
 Potentiometer → VIETDUINO UNO → LED
@@ -488,7 +488,7 @@ Potentiometer → VIETDUINO UNO → LED
 
 **Analog Signal (tín hiệu tương tự)** là tín hiệu có giá trị thay đổi liên tục theo thời gian và biên độ.
 
-Trên Arduino UNO, bộ chuyển đổi Analog-to-Digital Converter (**ADC**) có độ phân giải **10-bit**, chuyển điện áp đầu vào trong khoảng `0V` đến `5V` thành giá trị số từ:
+Trên Arduino/Vietduino UNO (MCU ATmega328P), bộ chuyển đổi Analog-to-Digital Converter (**ADC**) có độ phân giải **10-bit**, chuyển điện áp đầu vào trong khoảng `0V` đến `5V` thành giá trị số từ:
 
 ```text
 0 → 1023
@@ -503,8 +503,6 @@ Ví dụ:
 | `5V` | `1023` |
 
 Khi xoay Potentiometer, giá trị Analog đọc được sẽ thay đổi. Trong bài học này, giá trị đó được sử dụng để thay đổi **thời gian nhấp nháy của LED**.
-
----
 
 ## Kết nối
 
